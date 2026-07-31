@@ -17,9 +17,7 @@ A Python-based optimisation system that assigns university modules to computer l
 - [Example Output](#example-output)
 - [Constraints](#constraints)
 - [Objective Function](#objective-function)
-- [Future Improvements](#future-improvements)
 - [Authors](#authors)
-- [License](#license)
 
 ---
 
