@@ -1,0 +1,10 @@
+M1,AI Systems,85,Python
+M2,Control Systems,45,MATLAB
+M3,Object Oriented,25,Java
+M4,Machine Learning,55,Python
+M5,Numerical Methods,35,MATLAB
+M6,Software Design,15,Java
+M7,Enterprise Systems,90,Java
+M8,Scripting Basics,30,Python
+M9,Signal Processing,20,MATLAB
+M10,Data Structures,50,Python

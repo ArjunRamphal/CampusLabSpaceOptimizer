@@ -1,0 +1,4 @@
+L1,Advanced Lab A,100,Python Java MATLAB
+L2,Coding Lab B,60,Python Java
+L3,Data Lab C,40,Python MATLAB
+L4,Legacy Lab D,30,Java MATLAB
