@@ -1,4 +1,11 @@
+"""Assign modules to compatible computer labs and compare two search stages."""
+
+import argparse
+from pathlib import Path
 import time
+
+
+BASE_DIR = Path(__file__).resolve().parent
 
 def load_labs(filename):
     labs = {}
@@ -75,7 +82,7 @@ def greedy_assignment():
                 feasible_labs.append(lab_id)
 
         if not feasible_labs:
-            raise Exception(f"No feasible lab found for {module_id}")
+            raise ValueError(f"No feasible lab found for {module_id}")
 
         best_lab = min(feasible_labs,
                        key=lambda l: labs[l]["capacity"])
@@ -147,13 +154,34 @@ def print_solution(title, assignment):
     print(f"TOTAL UNUSED SEATS: {total_unused}")
     print("\n")
 
-if __name__ == "__main__":
+def main(argv=None):
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument(
+        "--labs",
+        type=Path,
+        default=BASE_DIR / "data" / "Labs.txt",
+        help="Lab input file (default: data/Labs.txt beside this script).",
+    )
+    parser.add_argument(
+        "--modules",
+        type=Path,
+        default=BASE_DIR / "data" / "Modules.txt",
+        help="Module input file (default: data/Modules.txt beside this script).",
+    )
+    args = parser.parse_args(argv)
 
-    labs = load_labs("Labs.txt")
-    modules = load_modules("Modules.txt")
+    global labs, modules
+    try:
+        labs = load_labs(args.labs)
+        modules = load_modules(args.modules)
+    except (OSError, ValueError, IndexError) as error:
+        parser.error(f"Could not load input data: {error}")
 
     start_greedy = time.perf_counter()
-    greedy_solution = greedy_assignment()
+    try:
+        greedy_solution = greedy_assignment()
+    except ValueError as error:
+        parser.error(str(error))
     end_greedy = time.perf_counter()
 
     greedy_time = end_greedy - start_greedy
@@ -170,3 +198,8 @@ if __name__ == "__main__":
     print("Processing Times")
     print(f"Greedy Algorithm Time: {greedy_time:.6f} seconds")
     print(f"Local Search Time: {local_time:.6f} seconds")
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
